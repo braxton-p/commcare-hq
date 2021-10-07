@@ -540,6 +540,14 @@ class EntriesHelper(object):
         from corehq.apps.app_manager.suite_xml.sections.remote_requests import RemoteRequestFactory
         factory = RemoteRequestFactory(module, [])
         query = factory.build_remote_request_queries()[0]
+        query.data.append(QueryData(key="case_id", ref="""
+            if(
+                count(instance('commcaresession')/session/data/case_id) > 0,
+                instance('commcaresession')/session/data/case_id,
+                ''
+            )
+        """))
+        query.default_search = "count(instance('commcaresession')/session/data/case_id) > 0"
         return FormDatumMeta(datum=query, case_type=None, requires_selection=False, action=None)
 
     def get_data_registry_case_datums(self, datum, module):
@@ -560,7 +568,7 @@ class EntriesHelper(object):
                         QueryData(key='case_id', ref=case_id_xpath),
                         QueryData(key=CASE_SEARCH_REGISTRY_ID_KEY, ref=f"'{module.search_config.data_registry}'")
                     ],
-                    default_search='true',
+                    default_search='true()',
                 ),
                 case_type=None,
                 requires_selection=False,

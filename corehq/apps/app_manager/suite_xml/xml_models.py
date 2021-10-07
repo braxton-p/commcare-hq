@@ -499,7 +499,7 @@ class RemoteRequestQuery(OrderedXmlObject, XmlObject):
     template = StringField('@template')
     data = NodeListField('data', QueryData)
     prompts = NodeListField('prompt', QueryPrompt)
-    default_search = BooleanField("@default_search")
+    default_search = StringField("@default_search")
 
 
 class Entry(OrderedXmlObject, XmlObject):
