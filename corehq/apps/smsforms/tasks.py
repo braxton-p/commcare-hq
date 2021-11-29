@@ -92,6 +92,10 @@ def handle_due_survey_action(domain, contact_id, session_id):
         ):
             return
 
+        if session.start_time + timedelta(minutes=session.expire_after) < utcnow():
+            close_session.delay(contact_id, session_id)
+            return
+
         if toggles.ONE_PHONE_NUMBER_MULTIPLE_CONTACTS.enabled(domain):
             if not XFormsSessionSynchronization.claim_channel_for_session(session):
                 from .management.commands import handle_survey_actions
