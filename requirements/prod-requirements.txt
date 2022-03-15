@@ -522,7 +522,7 @@ tomli==2.0.0
     # via black
 toposort==1.7
     # via -r base-requirements.in
-tornado==4.5.3
+tornado==5.1.1
     # via flower
 traitlets==5.1.1
     # via
@@ -535,9 +535,7 @@ turn-python==0.0.1
 twilio==6.5.1
     # via -r base-requirements.in
 typing-extensions==4.1.1
-    # via
-    #   black
-    #   django-countries
+    # via django-countries
 ua-parser==0.10.0
     # via user-agents
 unidecode==1.2.0
